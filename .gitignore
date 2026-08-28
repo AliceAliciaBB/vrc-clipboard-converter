@@ -1,0 +1,9 @@
+bin/
+obj/
+*.user
+
+# yt-dlp本体・検証用バイナリ/ログ(ソースではないため管理対象外)
+*.exe
+*_log.txt
+err.txt
+out.json
