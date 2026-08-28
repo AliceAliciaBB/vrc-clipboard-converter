@@ -1,3 +1,5 @@
+using VrcClipboardConverter.UI;
+
 namespace VrcClipboardConverter;
 
 internal static class Program
@@ -6,6 +8,6 @@ internal static class Program
     static void Main()
     {
         ApplicationConfiguration.Initialize();
-        Application.Run();
+        Application.Run(new TrayContext());
     }
 }
