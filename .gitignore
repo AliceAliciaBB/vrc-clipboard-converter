@@ -7,3 +7,7 @@ obj/
 *_log.txt
 err.txt
 out.json
+
+# 配布用ビルド成果物(publishの都度再生成できるため管理対象外)
+VrcClipboardConverter/dist/
+*.zip
