@@ -10,9 +10,7 @@ class YtDlpWrapper
     {
         string exeDir = AppDomain.CurrentDomain.BaseDirectory;
         string realExe = Path.Combine(exeDir, "yt-dlp_real.exe");
-        string logDir = @"D:\yt-dlp-logs";
-        Directory.CreateDirectory(logDir);
-        string logFile = Path.Combine(logDir, "yt-dlp_log.txt");
+        string logFile = Path.Combine(exeDir, "yt-dlp_wrapper_log.txt");
 
         object logLock = new object();
 

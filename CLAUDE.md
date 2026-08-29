@@ -47,6 +47,30 @@ FIX: 以下の条件がすべて揃った場合にHLSマニフェストが生成
     付与されることも確認された。
 ```
 
+```yaml
+---
+name: vrchat_tools_localLow_lowIL_write_block
+success_count: 1
+promoted_to:
+---
+
+PROBLEM: `C:\Users\<user>\AppData\LocalLow\VRChat\VRChat\Tools\yt-dlp.exe` を
+    ログ出力用のラッパーexe(YtDlpWrapper.cs)に差し替えたところ、
+    `System.UnauthorizedAccessException: Access to the path 'D:\...' is denied.`
+    でログファイル作成に失敗した。ACL(icacls)上は書き込み権限があるように見えるのに
+    毎回失敗する不可解な現象だった。
+FIX: `AppData\LocalLow` 配下のフォルダには NTFS の Mandatory Label
+    `Low Mandatory Level` が付与されており(`icacls <path>` で確認できる)、
+    そのフォルダ内で新規作成されたファイル/exeは自動的にLow ILを継承する。
+    Low IL exeを実行すると、そのプロセス自体がLow整合性レベルで動作し、
+    Medium IL以上のフォルダ(D:\、%TEMP%、ユーザーのホームディレクトリ直下など)
+    への書き込みがすべて拒否される(Low IL自身のフォルダ内への書き込みは可能)。
+    対処: ログ出力先をexeと同じLocalLow配下のフォルダ
+    (`AppDomain.CurrentDomain.BaseDirectory` 配下)に変更することで解決した。
+    診断時は `icacls <ファイル/フォルダ>` の出力に
+    `Mandatory Label\Low Mandatory Level` が出るかを確認するとよい。
+```
+
 ---
 
 ## Git運用メモ
